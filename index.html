@@ -151,6 +151,45 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-HTML的body中替换图片链接" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title: HTML的body中替换图片链接</p>
+<p>-(void)replaceDetailImageWithArticle:(LPNewsArticleModel *)article{</p>
+<p>​    NSMutableString <em>body = [NSMutableString stringWithString:article.body];<br>​    for (LPNewsDetailImgeInfo </em>image in article.img) {<br>​        NSString *replaceString = [NSString stringWithFormat:@”<img src="\"%@\"" alt="\"%@\"">“,image.src,image.alt?image.alt:@””];<br>​        [body replaceOccurrencesOfString:image.ref withString:replaceString options:NSCaseInsensitiveSearch range:NSMakeRange(0, body.length)];<br>​    }<br>​    article.body = [body copy];</p>
+<p>}</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/31/HTML的body中替换图片链接/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-重写description按自己的想法来NSLog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

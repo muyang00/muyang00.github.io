@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-03-29T06:34:16.000Z</updated>
+  <updated>2017-03-31T10:55:19.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2017/03/31/HTML%E7%9A%84body%E4%B8%AD%E6%9B%BF%E6%8D%A2%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5/"/>
+    <id>http://yoursite.com/2017/03/31/HTML的body中替换图片链接/</id>
+    <published>2017-03-31T10:55:19.000Z</published>
+    <updated>2017-03-31T10:55:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>title: HTML的body中替换图片链接</p>
+<p>-(void)replaceDetailImageWithArticle:(LPNewsArticleModel *)article{</p>
+<p>​    NSMutableString <em>body = [NSMutableString stringWithString:article.body];<br>​    for (LPNewsDetailImgeInfo </em>image in article.img) {<br>​        NSString *replaceString = [NSString stringWithFormat:@”<img src="\"%@\"" alt="\"%@\"">“,image.src,image.alt?image.alt:@””];<br>​        [body replaceOccurrencesOfString:image.ref withString:replaceString options:NSCaseInsensitiveSearch range:NSMakeRange(0, body.length)];<br>​    }<br>​    article.body = [body copy];</p>
+<p>}</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;title: HTML的body中替换图片链接&lt;/p&gt;
+&lt;p&gt;-(void)replaceDetailImageWithArticle:(LPNewsArticleModel *)article{&lt;/p&gt;
+&lt;p&gt;​    NSMutableString &lt;em&gt;body =
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>重写description，按自己的想法来NSLog</title>
