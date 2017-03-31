@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>永恩的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="永恩的技术博客">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="永恩的技术博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="永恩的技术博客">
+  
+    <link rel="alternate" href="/atom.xml" title="永恩的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">永恩的技术博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-重写description按自己的想法来NSLog" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/29/重写description按自己的想法来NSLog/" class="article-date">
+  <time datetime="2017-03-29T06:32:28.000Z" itemprop="datePublished">2017-03-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/29/重写description按自己的想法来NSLog/">重写description，按自己的想法来NSLog</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Objective-C运行时定义了几种重要的类型。"><a href="#Objective-C运行时定义了几种重要的类型。" class="headerlink" title="Objective-C运行时定义了几种重要的类型。"></a>Objective-C运行时定义了几种重要的类型。</h1><p>Class：定义Objective-C类</p>
+<p>Ivar：定义对象的实例变量，包括类型和名字。</p>
+<p>Protocol：定义正式协议。</p>
+<p>objc_property_t：定义属性。叫这个名字可能是为了防止和Objective-C 1.0中的用户类型冲突，那时候还没有属性。</p>
+<p>Method：定义对象方法或类方法。这个类型提供了方法的名字（就是<strong>选择器</strong>）、参数数量和类型，以及返回值（这些信息合起来称为方法的<strong>签名</strong>），还有一个指向代码的函数指针（也就是方法的<strong>实现</strong>）。</p>
+<p>SEL：定义选择器。选择器是方法名的唯一标识符。</p>
+<p>IMP：定义方法实现。这只是一个指向某个函数的指针，该函数接受一个对象、一个选择器和一个可变长参数列表（varargs），返回一个对象</p>
+<h1 id="property-和-Ivar-的区别"><a href="#property-和-Ivar-的区别" class="headerlink" title="@property 和 Ivar 的区别"></a>@property 和 Ivar 的区别</h1><p>@property属性其实是对成员变量的一种封装。</p>
+<p>我们先大概这样理解：</p>
+<p>@property = Ivar + setter + getterIvar</p>
+<p>Ivar可以理解为类中的一个变量，主要作用是用来保存数据的。</p>
+<p>我们不妨来看个例子，通过下边的例子能够很清楚的解释这两个东东：</p>
+<p>我们新建一个Person类?</p>
+<p>@interface Person : NSObject </p>
+<p>{</p>
+<p>NSString *name0;</p>
+<p>}</p>
+<p>@property(nonatomic,copy)NSString *name1;</p>
+<p>@end</p>
+<p>@implementation  Person</p>
+<p>- (instancetype)init {</p>
+<p>if (self = [super init]) {</p>
+<p>}</p>
+<p>return self;</p>
+<p>}</p>
+<p>@end</p>
+<p>在这个Person中name0就是成员变量，name1就是属性。</p>
+<p>我们创建一个Person：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Person *p= [[Person alloc] init];</div><div class="line"></div><div class="line">p.name1 = @&quot;abc&quot;;</div><div class="line"></div><div class="line">NSLog(@&quot;%@&quot;,p.name1);</div></pre></td></tr></table></figure>
+<p>我们会发现，我在Person类外边是不能访问name0的，这说明了什么？这说明成员变量name0只能在它自己的类的内部被访问。</p>
+<p>因此，我们推断出，@property其实也带有接口属性，也就是能够被外部对象访问。</p>
+<p>p.name1 = @”abc”;这行代码其实是调用了Person中name1的setter方法。</p>
+<p>NSLog(@”%@”,p.name1);</p>
+<p>这行代码其实是调用了Person中name1的getter方法。</p>
+<p>再说说setter和getter方法。大家应该都知道oc中有着严格的命名规范，拿这个例子来说，根据name1自动生成了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-(void)setName1:(NSString *)name1&#123;&#125;</div><div class="line"></div><div class="line">- (NSString *)name1</div></pre></td></tr></table></figure>
+<p>注意：这里并不讨论MRC的情况，一切解释的前提都是在ARC下。</p>
+<p>@synthesize</p>
+<p>这个关键字用来指定成员变量</p>
+<p>我们在Person的实现中，把代码改成这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">@implementation Person</div><div class="line"></div><div class="line">@synthesize name1 = _name2;</div><div class="line"></div><div class="line">- (instancetype)init &#123;</div><div class="line"></div><div class="line">if (self = [super init]) &#123;</div><div class="line"></div><div class="line">_name2 = @&quot;aaa&quot;;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">return self;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>这样我们就指定了name1的成员变量为_name2了，我们在Person的初始化init方法中根本打不出_name1这个属性。</p>
+<p>Person *p= [[Person alloc] init];</p>
+<p>// p.name1 = @”abc”;</p>
+<p>NSLog(@”%@”,p.name1);我们注释掉赋值的那一行，可以看到打印结果为：aaa。</p>
+<h1 id="废话不多说，直接上代码"><a href="#废话不多说，直接上代码" class="headerlink" title="废话不多说，直接上代码"></a><strong>废话不多说，直接上代码</strong></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">-(NSString *)description&#123;</div><div class="line"></div><div class="line">unsigned int count = 0;</div><div class="line"></div><div class="line">Ivar *ivars = class_copyIvarList(self.class, &amp;count);</div><div class="line"></div><div class="line">NSMutableString *str = [NSMutableString string];</div><div class="line"></div><div class="line">for (int i = 0; i &lt; count; ++i) &#123;</div><div class="line"></div><div class="line">Ivar ivar = ivars[i];</div><div class="line"></div><div class="line">const char *name = ivar_getName(ivar);</div><div class="line"></div><div class="line">NSString *proName = [NSString stringWithUTF8String:name];</div><div class="line"></div><div class="line">id value = [self valueForKey:proName];</div><div class="line"></div><div class="line">[str appendFormat:@&quot;&lt;%@ : %@&gt; \n&quot;, proName, value];</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">free(ivars);</div><div class="line"></div><div class="line">return str;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/29/重写description按自己的想法来NSLog/" data-id="cj0xp7te80001ennrapdwqjbw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-iOS 10后方法AVCaptureDeviceDiscoverySession使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/28/iOS 10后方法AVCaptureDeviceDiscoverySession使用/" class="article-date">
+  <time datetime="2017-03-28T00:58:52.000Z" itemprop="datePublished">2017-03-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/28/iOS 10后方法AVCaptureDeviceDiscoverySession使用/">iOS10后方法AVCaptureDeviceDiscoverySession使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言最近使用视频库，遇到一个尴尬的问题"><a href="#前言最近使用视频库，遇到一个尴尬的问题" class="headerlink" title="前言最近使用视频库，遇到一个尴尬的问题"></a>前言最近使用视频库<avfoundation avfoundation.h="">，遇到一个尴尬的问题</avfoundation></h3><h2 id="iOS-10-以前"><a href="#iOS-10-以前" class="headerlink" title="iOS 10 以前"></a>iOS 10 以前</h2><p>//用来返回是前置摄像头还是后置摄像头<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (AVCaptureDevice *)cameraWithPostion:(AVCaptureDevicePosition)position&#123;</div><div class="line">    //返回和视频录制相关的默认设备</div><div class="line">    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];</div><div class="line">    </div><div class="line">    //遍历这些设备返回跟postion相关的设备</div><div class="line">    for (AVCaptureDevice *device in devices) &#123;</div><div class="line">        if ([device position] == position) &#123;</div><div class="line">            return device;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return nil;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="iOS10-之后"><a href="#iOS10-之后" class="headerlink" title="iOS10 之后"></a>iOS10 之后</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (AVCaptureDevice *)cameraWithPostion:(AVCaptureDevicePosition)position&#123;</div><div class="line">    AVCaptureDeviceDiscoverySession *devicesIOS10 = [AVCaptureDeviceDiscoverySession  discoverySessionWithDeviceTypes:@[AVCaptureDeviceTypeBuiltInWideAngleCamera] mediaType:AVMediaTypeVideo position];</div><div class="line">    </div><div class="line">    NSArray *devicesIOS  = devicesIOS10.devices;</div><div class="line">    for (AVCaptureDevice *device in devicesIOS) &#123;</div><div class="line">        if ([device position] == position) &#123;</div><div class="line">            return device;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return nil;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/28/iOS 10后方法AVCaptureDeviceDiscoverySession使用/" data-id="cj0xp7te10000ennrcwevmomi" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/29/重写description按自己的想法来NSLog/">重写description，按自己的想法来NSLog</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/28/iOS 10后方法AVCaptureDeviceDiscoverySession使用/">iOS10后方法AVCaptureDeviceDiscoverySession使用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 永恩<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
