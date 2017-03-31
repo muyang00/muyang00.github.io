@@ -6,25 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>永恩的技术博客</title>
+  <title>HTML的body中替换图片链接 | 永恩的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="title: HTML的body中替换图片链接
--(void)replaceDetailImageWithArticle:(LPNewsArticleModel *)article{
-​    NSMutableString body = [NSMutableString stringWithString:article.body];​    for (LPNewsDetailImgeInfo i">
+  <meta name="description" content="-(void)replaceDetailImageWithArticle:(LPNewsArticleModel *)article{
+​    NSMutableString body = [NSMutableString stringWithString:article.body];​    for (LPNewsDetailImgeInfo image in article.img) {​">
 <meta property="og:type" content="article">
-<meta property="og:title" content="永恩的技术博客">
+<meta property="og:title" content="HTML的body中替换图片链接">
 <meta property="og:url" content="http://yoursite.com/2017/03/31/HTML的body中替换图片链接/index.html">
 <meta property="og:site_name" content="永恩的技术博客">
-<meta property="og:description" content="title: HTML的body中替换图片链接
--(void)replaceDetailImageWithArticle:(LPNewsArticleModel *)article{
-​    NSMutableString body = [NSMutableString stringWithString:article.body];​    for (LPNewsDetailImgeInfo i">
+<meta property="og:description" content="-(void)replaceDetailImageWithArticle:(LPNewsArticleModel *)article{
+​    NSMutableString body = [NSMutableString stringWithString:article.body];​    for (LPNewsDetailImgeInfo image in article.img) {​">
 <meta property="og:image" content="http://yoursite.com/\">
-<meta property="og:updated_time" content="2017-03-31T10:55:19.000Z">
+<meta property="og:updated_time" content="2017-03-31T11:02:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="永恩的技术博客">
-<meta name="twitter:description" content="title: HTML的body中替换图片链接
--(void)replaceDetailImageWithArticle:(LPNewsArticleModel *)article{
-​    NSMutableString body = [NSMutableString stringWithString:article.body];​    for (LPNewsDetailImgeInfo i">
+<meta name="twitter:title" content="HTML的body中替换图片链接">
+<meta name="twitter:description" content="-(void)replaceDetailImageWithArticle:(LPNewsArticleModel *)article{
+​    NSMutableString body = [NSMutableString stringWithString:article.body];​    for (LPNewsDetailImgeInfo image in article.img) {​">
 <meta name="twitter:image" content="http://yoursite.com/\">
   
     <link rel="alternative" href="/atom.xml" title="永恩的技术博客" type="application/atom+xml">
@@ -164,10 +161,24 @@
             <article id="post-HTML的body中替换图片链接" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HTML的body中替换图片链接
+    </h1>
+  
+
+        
+        <a href="/2017/03/31/HTML的body中替换图片链接/" class="archive-article-date">
+  	<time datetime="2017-03-31T10:55:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-31</time>
+</a>
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>title: HTML的body中替换图片链接</p>
-<p>-(void)replaceDetailImageWithArticle:(LPNewsArticleModel *)article{</p>
+        <p>-(void)replaceDetailImageWithArticle:(LPNewsArticleModel *)article{</p>
 <p>​    NSMutableString <em>body = [NSMutableString stringWithString:article.body];<br>​    for (LPNewsDetailImgeInfo </em>image in article.img) {<br>​        NSString *replaceString = [NSString stringWithFormat:@”<img src="\"%@\"" alt="\"%@\"">“,image.src,image.alt?image.alt:@””];<br>​        [body replaceOccurrencesOfString:image.ref withString:replaceString options:NSCaseInsensitiveSearch range:NSMakeRange(0, body.length)];<br>​    }<br>​    article.body = [body copy];</p>
 <p>}</p>
 
